@@ -1,0 +1,43 @@
+services:
+  nginx:
+    container_name: nginx
+    image: jwilder/nginx-proxy:alpine
+    restart: on-failure
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - web
+
+  mysql:
+    image: library/mariadb:10.4.11
+    container_name: db
+    ports:
+      - 3333:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - web
+    volumes:
+      - db_volume:/var/lib/mysql
+
+  skrepr:
+    build:
+      context: ./docker
+    container_name: skrepr
+    ports:
+      - 9000:8000
+    depends_on:
+      - nginx
+      - mysql
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - web
+
+volumes:
+  db_volume:
+
+networks:
+  web:
