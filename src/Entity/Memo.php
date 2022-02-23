@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MemoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MemoRepository::class)]
 class Memo implements \JsonSerializable
@@ -15,6 +16,7 @@ class Memo implements \JsonSerializable
 
     #[ORM\Column(type: 'string', length: 30)]
     #[Assert\NotBlank(message: 'name is required')]
+    #[Assert\Length(min: '3', minMessage: 'name min 3 characters')]
     private string $name;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
@@ -70,7 +72,6 @@ class Memo implements \JsonSerializable
     public function jsonSerialize()
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
             'phoneNumber' => $this->phoneNumber,
             'description' => $this->description

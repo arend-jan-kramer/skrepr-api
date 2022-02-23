@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Memo;
+use App\Interfaces\RequestHandlerInterface;
 use App\Repository\MemoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\PartialDenormalizationException;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -58,21 +60,47 @@ class ApiController extends AbstractController
     #[Route('/api/memo', name: 'createPhoneNumber', methods: ['POST'])]
     public function createPhoneNumber(Request $request): JsonResponse
     {
-        $memo = $this->serializer->deserialize(
-            $request->getContent(),
-            Memo::class,
-            $request->getContentType(), [
-                DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
-            ]
-        );
-
-        $errors = $this->validator->validate($memo);
-
-        if (count($errors) > 0) {
+        if ('json' !== $request->getContentType()) {
             return new JsonResponse([
                 'error' => true,
-                'message' => (string) $errors
+                'message' => 'invalid format json'
             ]);
+        }
+
+        try {
+            $memo = $this->serializer->deserialize(
+                $request->getContent(),
+                Memo::class,
+                'json', [
+                    DenormalizerInterface::COLLECT_DENORMALIZATION_ERRORS => true,
+                ]
+            );
+
+            $errors = $this->validator->validate($memo);
+
+            if ($errors->count() > 0) {
+                $errorMessage = [];
+                foreach ($errors as $error) {
+                    $errorMessage[] = $error->getMessage();
+                }
+                return new JsonResponse([
+                    'error' => true,
+                    'message' => $errorMessage
+                ]);
+            }
+        } catch (PartialDenormalizationException $exception) {
+            $errorMessage = ['Something go\'s wrong'];
+            foreach ($exception->getErrors() as  $e) {
+                if (!$e->canUseMessageForUser()) {
+                    $errorMessage[] = sprintf(
+                        'The value "%s" should be "%s" but got an "%s"',
+                        $e->getPath(),
+                        implode(', ', $e->getExpectedTypes()),
+                        $e->getCurrentType()
+                    );
+                }
+            }
+            return new JsonResponse(['error' => true, 'message' => $errorMessage]);
         }
 
         return new JsonResponse([
