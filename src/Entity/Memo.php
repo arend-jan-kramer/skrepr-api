@@ -11,20 +11,20 @@ class Memo implements \JsonSerializable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 30)]
     #[Assert\NotBlank(message: 'name is required')]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
     #[Assert\Regex('/^[1-9]{1,}[0-9]{2,}$/', message: 'phoneNumber should start with a Net number')]
     #[Assert\Length(min: '11', max: '11', maxMessage: 'phoneNumber max length {{ limit }}')]
-    private $phoneNumber;
+    private string|null $phoneNumber;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     #[Assert\Length(max: '255', maxMessage: 'max length {{ limit }}')]
-    private $description;
+    private string|null $description;
 
     public function getId(): ?int
     {

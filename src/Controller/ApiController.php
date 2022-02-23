@@ -14,7 +14,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class ApiController extends AbstractController
 {
-    private $memoRepository;
+    private MemoRepository $memoRepository;
+    private SerializerInterface $serializer;
+    private ValidatorInterface $validator;
 
     public function __construct(
         MemoRepository $memoRepository,
