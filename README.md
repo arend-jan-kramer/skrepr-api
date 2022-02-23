@@ -8,6 +8,10 @@ clone project
 ```
 git clone git@github.com:arend-jan-kramer/skrepr-api.git
 ```
+Start docker from project dir
+```
+docker-compose up -d
+```
 Log in to docker container
 ```
 docker exec -it skrepr /bin/bash
