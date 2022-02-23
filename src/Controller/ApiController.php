@@ -102,7 +102,7 @@ class ApiController extends AbstractController
             return new JsonResponse(['error' => true, 'message' => $errorMessage]);
         }
 
-        $this->memoRepository->save($memo);
+//        $this->memoRepository->save($memo);
 
         return new JsonResponse([
             'error' => false,
