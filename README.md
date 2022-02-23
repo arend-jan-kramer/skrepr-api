@@ -51,3 +51,18 @@ Start listening port
 symfony serve -d
 ```
 Open browser [link](http://localhost:9000)
+
+Endpoints
+```
+[GET]
+localhost:9000/api/memo/{id}
+[GET]
+localhost:9000/api/memos
+[POST]
+localhost:9000/api/memo
+{
+    "name":  "Henk",
+    "phoneNumber": "31786820080",
+    "description": ""
+}
+```
