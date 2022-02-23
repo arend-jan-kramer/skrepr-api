@@ -10,7 +10,7 @@ git clone git@github.com:arend-jan-kramer/skrepr-api.git
 ```
 Start docker from project dir
 ```
-docker-compose up -d
+cd skrepr-api && docker-compose up -d
 ```
 Log in to docker container
 ```
