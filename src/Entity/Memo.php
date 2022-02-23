@@ -20,7 +20,7 @@ class Memo implements \JsonSerializable
     private string $name;
 
     #[ORM\Column(type: 'string', length: 11, nullable: true)]
-    #[Assert\Regex('/^[1-9]{1,}[0-9]{2,}$/', message: 'phoneNumber should start with a Net number')]
+    #[Assert\Regex('/^[1-9]{1,}[0-9]{2,}$/', message: 'phoneNumber should start with a country code example 31786820080')]
     #[Assert\Length(min: '11', max: '11', maxMessage: 'phoneNumber max length {{ limit }}')]
     private string|null $phoneNumber;
 
