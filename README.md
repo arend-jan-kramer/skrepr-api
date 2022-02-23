@@ -19,7 +19,7 @@ cp .env .env.local
 
 Update the DATABASE_URL=
 ```
-DATABASE_URL="mysql://root:secret@db:3306/skrepr?serverVersion=10.4.11&charset=utf8mb4"
+DATABASE_URL="mysql://root:secret@db:3306/skrepr?serverVersion=mariadb-10.4.11&charset=utf8mb4"
 ```
 
 Update file permissions
