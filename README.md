@@ -10,7 +10,8 @@ git clone git@github.com:arend-jan-kramer/skrepr-api.git
 ```
 Start docker from project dir
 ```
-cd skrepr-api && docker-compose up -d
+cd skrepr-api
+docker-compose up -d
 ```
 Log in to docker container
 ```
@@ -28,7 +29,8 @@ DATABASE_URL="mysql://root:secret@db:3306/skrepr?serverVersion=mariadb-10.4.11&c
 
 Update file permissions
 ```
-cd .. && chown 1000:1000 html -R && cd html
+cd ..
+chown 1000:1000 html -R && cd html
 ```
 
 Install packages
