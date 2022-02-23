@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Memo;
-use App\Interfaces\RequestHandlerInterface;
 use App\Repository\MemoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
