@@ -46,10 +46,6 @@ Create tables
 ```
 php bin/console doctrine:migration:migrate
 ```
-Start listening port
-```
-symfony serve -d
-```
 Open browser [link](http://localhost:9000)
 
 Endpoints

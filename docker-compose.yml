@@ -29,7 +29,7 @@ services:
       context: ./docker
     container_name: skrepr
     ports:
-      - 9000:8000
+      - 9000:80
     depends_on:
       - nginx
       - mysql
